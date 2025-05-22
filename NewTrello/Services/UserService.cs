@@ -1,38 +1,45 @@
 ﻿using AutoMapper;
 using NewTrello.Dtos;
+using NewTrello.Mappings;
 using NewTrello.Models;
 using NewTrello.Repositories;
 using NewTrello.Services.Interfaces;
 
 namespace NewTrello.Services;
 
-public class UserService(UserRepository repo, IMapper mapper) : IUserService
+public class UserService(UserRepository repo) : IUserService
 {
     private readonly UserRepository _repo = repo;
-    private readonly IMapper _mapper = mapper;
 
     public async Task<IEnumerable<UserResponseDTO>> GetAllUsersAsync()
     {
         var users = await _repo.GetAllAsync();
-        return _mapper.Map<IEnumerable<UserResponseDTO>>(users);
+       
+        var usersDtos = UserMapper.ToDto(users);
+        return usersDtos;
     }
 
     public async Task<UserResponseDTO?> GetUserByIdAsync(Guid id)
     {
         var user = await _repo.GetByIdAsync(id);
-        return _mapper.Map<UserResponseDTO?>(user);
+        if (user is null)
+            return null;
+
+        var userDto = UserMapper.ToDto(user);
+        return userDto;
     }
 
     public async Task<UserResponseDTO> CreateUserAsync(UserCreateRequestDTO userDTO)
     {
-        var user = _mapper.Map<User>(userDTO);
+        var user = UserMapper.ToModel(userDTO);
 
         user.Id = Guid.NewGuid();        
 
         await _repo.AddAsync(user);
         await _repo.SaveAsync();
 
-        return _mapper.Map<UserResponseDTO>(user);
+        var userDto = UserMapper.ToDto(user);
+        return userDto;
     }
 
     public async Task UpdateUserAsync(Guid id, UserUpdateRequestDTO dto)

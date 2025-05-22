@@ -8,7 +8,6 @@ namespace NewTrello.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class CardsController(ICardService cardService) : ControllerBase
     {
         private readonly ICardService _cardService = cardService;

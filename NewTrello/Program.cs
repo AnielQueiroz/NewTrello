@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NewTrello.Context;
@@ -31,6 +32,12 @@ builder.Services.AddScoped<IBoardService, BoardService>();
 builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<IColumnService, ColumnService>();
 builder.Services.AddScoped<AuthService, AuthService>();
+
+// Authorization
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new AuthorizeFilter());
+});
 
 // JWT
 builder.Services.AddAuthentication(options =>

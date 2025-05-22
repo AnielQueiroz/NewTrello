@@ -7,7 +7,6 @@ namespace NewTrello.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class BoardsController(IBoardService boardService) : Controller
 {
     private readonly IBoardService _boardService = boardService;

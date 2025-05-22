@@ -7,7 +7,6 @@ namespace NewTrello.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class UsersController(IUserService userService) : ControllerBase
 {
     private readonly IUserService _userService = userService;

@@ -7,7 +7,6 @@ namespace NewTrello.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class ColumnsController(IColumnService columnService) : ControllerBase
 {
     private readonly IColumnService _columnService = columnService;

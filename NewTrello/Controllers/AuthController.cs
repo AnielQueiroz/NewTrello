@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NewTrello.Dtos;
-using NewTrello.Models;
 using NewTrello.Services;
 using NewTrello.Services.Interfaces;
 
@@ -8,6 +8,7 @@ namespace NewTrello.Controllers;
 
 [ApiController]
 [Route("/api/[controller]")]
+[AllowAnonymous]
 public class AuthController(IUserService userService, AuthService authService) : ControllerBase
 {
     private readonly IUserService _userService = userService;
